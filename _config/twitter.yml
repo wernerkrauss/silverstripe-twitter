@@ -1,0 +1,19 @@
+---
+Name: twitterconfig
+---
+Injector:
+  TwitterService:
+    class: CachedTwitterService
+    constructor:
+      - %$WebTwitterService
+  WebTwitterService:
+    class: TwitterService
+TwitterExtension:
+  dependencies:
+    TwitterService: %$TwitterService
+Page_Controller:
+  extensions:
+    - TwitterExtension
+SiteConfig:
+  extensions:
+    - TwitterSiteConfig

@@ -1,0 +1,70 @@
+# Simple Twitter feed for Silverstripe
+
+This module puts a simple twitter feed into your page. Nothing fancy!
+
+## Credits and Authors
+
+ * Damian Mooyman - <https://github.com/tractorcow/silverstripe-twitter>
+
+## Requirements
+
+ * SilverStripe 3.1 or above
+ * PHP 5.3
+
+## Installation Instructions
+
+ * Extract all files into the 'twitter' folder under your Silverstripe root, or install using composer
+
+```bash
+composer require "tractorcow/silverstripe-twitter": "3.1.*@dev"
+```
+
+ * Run a dev/build to generate the required fields
+ * Signup for a twitter app at https://dev.twitter.com/apps and create an access token. Go
+   to the "Settings" tab in the CMS and load both the Consumer keys and the access token keys
+   into the 'Twitter App' tab.
+ * Put an `<% include TwitterWidget %>` into your template, or you can use the following to
+   create a list of items.
+
+```html
+<% if LatestTweets %>
+	<ul class="Tweets">
+		<% loop LatestTweets %>
+			<li class="Tweet">$Content</li>
+		<% end_loop %>
+	</ul>
+<% end_if %>
+```
+
+## Need more help?
+
+Message or email me at damian.mooyman@gmail.com or, well, read the code!
+
+## License
+
+Copyright (c) 2013, Damian Mooyman
+All rights reserved.
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+ * Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+ * The name of Damian Mooyman may not be used to endorse or promote products
+   derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
