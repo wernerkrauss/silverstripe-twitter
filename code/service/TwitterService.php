@@ -99,9 +99,9 @@ class TwitterService implements ITwitterService {
 	 */
 	protected function parseText($tweet) {
 		$rawText = $tweet->text;
-
-		// tokenise into characters for parsing
-		$tokens = str_split($rawText);
+		
+		// tokenise into words for parsing (multibyte safe)
+		$tokens = preg_split('/(?<!^)(?!$)/u', $rawText);
 
 		// Inject links
 		foreach ($tweet->entities->urls as $url) {
