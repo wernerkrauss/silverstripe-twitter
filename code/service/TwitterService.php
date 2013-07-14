@@ -1,5 +1,4 @@
 <?php
-
 // Require third party lib
 require_once __DIR__ . "/../../thirdparty/twitteroauth/twitteroauth/twitteroauth.php";
 
@@ -48,8 +47,56 @@ class TwitterService implements ITwitterService {
 		if ($response) foreach ($response as $tweet) {
 			$tweets[] = $this->parseTweet($tweet);
 		}
-		
+
 		return $tweets;
+	}
+
+	/**
+	 * Calculate the time ago in days, hours, whichever is the most significant
+	 * 
+	 * @param string $time Input time as a string
+	 * @param integer $detail Number of time periods to display. Increasing provides greater time detail.
+	 * @return string
+	 */
+	public static function determine_time_ago($time, $detail = 1) {
+		$difference = time() - strtotime($time);
+
+		if ($difference < 1) {
+			return '0 seconds';
+		}
+
+		$periods = array(
+			365 * 24 * 60 * 60 => 'year',
+			30 * 24 * 60 * 60 => 'month',
+			24 * 60 * 60 => 'day',
+			60 * 60 => 'hour',
+			60 => 'minute',
+			1 => 'second'
+		);
+		
+		$items = array();
+
+		foreach ($periods as $seconds => $description) {
+			// Break if reached the sufficient level of detail
+			if(count($items) >= $detail) break;
+			
+			// If this is the last element in the chain, round the value.
+			// Otherwise, take the floor of the time difference
+			$quantity = $difference / $seconds;
+			if(count($items) === $detail - 1) {
+				$quantity = round($quantity);
+			} else  {
+				$quantity = intval($quantity);
+			}
+			
+			// Check that the current period is smaller than the current time difference
+			if($quantity <= 0) continue;
+			
+			// Append period to total items and continue calculation with remainder
+			$items[] = $quantity.' '.$description.($quantity>1?'s':'');
+			$difference -= $quantity * $seconds;
+		}
+		return implode(' ', $items);
 	}
 
 	/**
@@ -58,12 +105,22 @@ class TwitterService implements ITwitterService {
 	 * @param stdObject $tweet Tweet object
 	 * @return array Array of fields with Date, User, and Content as keys
 	 */
-	function parseTweet($tweet) {
+	public function parseTweet($tweet) {
+
+		$profileLink = "https://twitter.com/" . Convert::raw2url($tweet->user->screen_name);
+		$tweetID = $tweet->id_str;
 
 		return array(
+			'ID' => $tweetID,
 			'Date' => $tweet->created_at,
+			'TimeAgo' => self::determine_time_ago($tweet->created_at),
 			'User' => $tweet->user->screen_name,
-			'Content' => $this->parseText($tweet)
+			'Content' => $this->parseText($tweet),
+			'Link' => "{$profileLink}/status/{$tweetID}",
+			'ProfileLink' => $profileLink,
+			'ReplyLink' => "https://twitter.com/intent/tweet?in_reply_to={$tweetID}",
+			'RetweetLink' => "https://twitter.com/intent/retweet?tweet_id={$tweetID}",
+			'FavouriteLink' => "https://twitter.com/intent/favorite?tweet_id={$tweetID}"
 		);
 	}
 
@@ -99,7 +156,7 @@ class TwitterService implements ITwitterService {
 	 */
 	protected function parseText($tweet) {
 		$rawText = $tweet->text;
-		
+
 		// tokenise into words for parsing (multibyte safe)
 		$tokens = preg_split('/(?<!^)(?!$)/u', $rawText);
 

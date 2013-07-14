@@ -17,3 +17,6 @@ Page_Controller:
 SiteConfig:
   extensions:
     - TwitterSiteConfig
+CachedTwitterService:
+# Lifetime in seconds of cache
+  lifetime: 300

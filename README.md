@@ -42,6 +42,27 @@ composer require "tractorcow/silverstripe-twitter": "3.1.*@dev"
 <% end_if %>
 ```
 
+## Templating
+
+Tweets can be retrieved with one of the following controller functions (inside a loop or control)
+
+ * $LatestTweets('10') - Returns up to the specified number of tweets (defaults to 10 if no count specified)
+ * $LatestTweet - Returns the latest tweet
+
+Each tweet object has the following properties:
+
+ * ID - Twitter ID of the tweet
+ * Date - Creation date (string value)
+ * TimeAgo - Tweet age (string value)
+ * DateObject - SS_DateTime instance containing Date value
+ * User - Username of poster
+ * Content - Tweet HTML
+ * Link - Link to tweet
+ * ProfileLink - Link to author profile
+ * ReplyLink - Link to reply to this tweet
+ * RetweetLink - Linke to retweet this tweet
+ * FavouriteLink - Link to add this tweet to favourites
+
 ## Need more help?
 
 Message or email me at damian.mooyman@gmail.com or, well, read the code!

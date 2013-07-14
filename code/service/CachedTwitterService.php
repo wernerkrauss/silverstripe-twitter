@@ -8,7 +8,6 @@
  * @package twitter
  */
 class CachedTwitterService implements ITwitterService {
-	private static $lifetime = 600; // Lifetime in seconds of cache
 
 	/**
 	 * @var ITwitterService
@@ -29,7 +28,13 @@ class CachedTwitterService implements ITwitterService {
 		
 		// Save and return
 		$result = $this->cachedService->getTweets($user, $count);
-		$cache->save(serialize($result), $cacheKey, array(), self::$lifetime);
+		$cache->save(serialize($result), $cacheKey, array(), Config::inst()->get('CachedTwitterService', 'lifetime'));
+		
+		// Refresh the 'TimeAgo' field, as the cached value would now be outdated
+		if($result) foreach($result as $index => $item) {
+			$result[$index]['TimeAgo'] = TwitterService::determine_time_ago($item['Date']);
+		}
+		
 		return $result;
 	}
 
