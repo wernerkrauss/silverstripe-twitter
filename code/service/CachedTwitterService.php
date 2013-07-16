@@ -30,7 +30,7 @@ class CachedTwitterService implements ITwitterService {
 		$result = $this->cachedService->getTweets($user, $count);
 		$cache->save(serialize($result), $cacheKey, array(), Config::inst()->get('CachedTwitterService', 'lifetime'));
 		
-		// Refresh the 'TimeAgo' field, as the cached value would now be outdated
+		// Refresh the 'TimeAgo' field, as the cached value would now be outdated, or the locale could have changed.
 		if($result) foreach($result as $index => $item) {
 			$result[$index]['TimeAgo'] = TwitterService::determine_time_ago($item['Date']);
 		}

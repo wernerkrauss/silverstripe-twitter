@@ -62,7 +62,7 @@ class TwitterService implements ITwitterService {
 		$difference = time() - strtotime($time);
 
 		if ($difference < 1) {
-			return '0 seconds';
+			return _t('Date.LessThanMinuteAgo', 'less than a minute');
 		}
 
 		$periods = array(
@@ -70,8 +70,8 @@ class TwitterService implements ITwitterService {
 			30 * 24 * 60 * 60 => 'month',
 			24 * 60 * 60 => 'day',
 			60 * 60 => 'hour',
-			60 => 'minute',
-			1 => 'second'
+			60 => 'min',
+			1 => 'sec'
 		);
 		
 		$items = array();
@@ -93,10 +93,17 @@ class TwitterService implements ITwitterService {
 			if($quantity <= 0) continue;
 			
 			// Append period to total items and continue calculation with remainder
-			$items[] = $quantity.' '.$description.($quantity>1?'s':'');
+			if($quantity !== 1) $description .= 's';
+			$items[] = $quantity.' '. _t("Date.".strtoupper($description), $description);
 			$difference -= $quantity * $seconds;
 		}
-		return implode(' ', $items);
+		$time = implode(' ', $items);
+		return _t(
+			'Date.TIMEDIFFAGO',
+			'{difference} ago',
+			'Time since tweet',
+			array('difference' => $time)
+		);
 	}
 
 	/**
