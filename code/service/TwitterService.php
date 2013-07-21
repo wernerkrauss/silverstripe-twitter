@@ -121,6 +121,7 @@ class TwitterService implements ITwitterService {
 			'ID' => $tweetID,
 			'Date' => $tweet->created_at,
 			'TimeAgo' => self::determine_time_ago($tweet->created_at),
+			'Name' => $tweet->user->name,
 			'User' => $tweet->user->screen_name,
 			'Content' => $this->parseText($tweet),
 			'Link' => "{$profileLink}/status/{$tweetID}",
