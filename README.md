@@ -56,6 +56,7 @@ Each tweet object has the following properties:
  * TimeAgo - Tweet age (string value)
  * DateObject - SS_DateTime instance containing Date value
  * User - Username of poster
+ * Name - Real name of poster
  * Content - Tweet HTML
  * Link - Link to tweet
  * ProfileLink - Link to author profile
