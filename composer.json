@@ -19,5 +19,8 @@
 	},
 	"extra": {
 		"installer-name": "twitter"
+	},
+	"suggest": {
+		"silverstripe/widgets": "Put your tweets in your blog or page sidebar!"
 	}
 }
