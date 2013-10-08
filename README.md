@@ -16,7 +16,7 @@ This module puts a simple twitter feed into your page. Nothing fancy!
  * Extract all files into the 'twitter' folder under your Silverstripe root, or install using composer
 
 ```bash
-composer require "tractorcow/silverstripe-twitter": "3.1.*@dev"
+composer require "tractorcow/silverstripe-twitter" "3.1.*@dev"
 ```
 
  * Run a dev/build to generate the required fields
