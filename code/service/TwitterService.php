@@ -123,6 +123,7 @@ class TwitterService implements ITwitterService {
 			'TimeAgo' => self::determine_time_ago($tweet->created_at),
 			'Name' => $tweet->user->name,
 			'User' => $tweet->user->screen_name,
+			'AvatarUrl' => $tweet->user->profile_image_url,
 			'Content' => $this->parseText($tweet),
 			'Link' => "{$profileLink}/status/{$tweetID}",
 			'ProfileLink' => $profileLink,
