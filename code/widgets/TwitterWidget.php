@@ -20,17 +20,30 @@ if (class_exists('Widget')) {
 			'TweetCount' => 3
 		);
 
-		private static $title = 'Twitter Feed';
-
-		private static $cmsTitle = 'Twitter Feed';
-
-		private static $description = 'Shows twitter posts in the sidebar.';
+		public function Title()
+		{
+			if ($this->Title)
+			{
+				return $this->Title;
+			}
+			return _t('TwitterWidget.WIDGETTITLE', 'Twitter Feed');
+		}
+		
+		public function CMSTitle()
+		{
+			return _t('TwitterWidget.CMSTITLE', 'Twitter Feed');
+		}
+		
+		public function Description()
+		{
+			return _t('TwitterWidget.DESCRIPTION', 'Shows twitter posts in the sidebar.');
+		}
 
 		function getCMSFields() {
 			$this->beforeUpdateCMSFields(function(&$fields) {
 				$fields->merge(array(
-					new TextField('Title', 'Title', null, 255),
-					new NumericField('TweetCount', 'Tweet Count')
+					new TextField('Title', _t('TwitterWidget.FIELD_TITLE', 'Title'), null, 255),
+					new NumericField('TweetCount', _t('TwitterWidget.FIELD_TWEET_COUNT', 'Tweet Count'))
 				));
 			});
 
@@ -40,10 +53,6 @@ if (class_exists('Widget')) {
 		function getLatestTweets() {
 			$controller = Controller::curr();
 			return $controller->LatestTweets($this->TweetCount);
-		}
-
-		function Title() {
-			return $this->Title ? $this->Title : parent::Title();
 		}
 	}
 

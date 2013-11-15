@@ -21,12 +21,12 @@ class TwitterSiteConfig extends DataExtension {
 		
 		// Twitter setup
 		$fields->addFieldsToTab('Root.TwitterApp', array(
-			$userNameField = new TextField('TwitterUsername', 'Twitter Username', null, 255),
-			new TextField('TwitterAppConsumerKey', 'Consumer Key', null, 255),
-			new TextField('TwitterAppConsumerSecret', 'Consumer Secret', null, 255),
-			new TextField('TwitterAppAccessToken', 'Access Token', null, 255),
-			new TextField('TwitterAppAccessSecret', 'Access Secret', null, 255)
+			$userNameField = new TextField('TwitterUsername', _t('TwitterSiteConfig.FIELD_TWITTER_USERNAME', 'Twitter Username'), null, 255),
+			new TextField('TwitterAppConsumerKey', _t('TwitterSiteConfig.FIELD_CONSUMER_KEY', 'Consumer Key'), null, 255),
+			new TextField('TwitterAppConsumerSecret', _t('TwitterSiteConfig.FIELD_CONSUMER_SECRET', 'Consumer Secret'), null, 255),
+			new TextField('TwitterAppAccessToken', _t('TwitterSiteConfig.FIELD_ACCESS_TOKEN', 'Access Token'), null, 255),
+			new TextField('TwitterAppAccessSecret', _t('TwitterSiteConfig.FIELD_ACCESS_SECRET' ,'Access Secret'), null, 255)
 		));
-		$userNameField->setDescription('Leave blank to disable twitter');
+		$userNameField->setDescription(_t('TwitterSiteConfig.FIELD_TWITTER_USERNAME_DESCRIPTION', 'Leave blank to disable twitter'));
 	}
 }
