@@ -51,6 +51,32 @@ class TwitterService implements ITwitterService {
 		return $tweets;
 	}
 
+	function searchTweets($query, $count) {
+	
+		$tweets = array();
+		if (!empty($query))
+		{
+			// Call rest api
+			$arguments = http_build_query(array(
+					'q' => Convert::raw2sql($query),
+					'count' => $count,
+					'include_rts' => true
+			));
+			$connection = $this->getConnection();
+			$response = $connection->get("https://api.twitter.com/1.1/search/tweets.json?$arguments");
+		
+			// Parse all tweets
+			if ($response)
+			{
+			 	foreach ($response->statuses as $tweet) {
+					$tweets[] = $this->parseTweet($tweet);
+				}
+			}
+		}
+	
+		return $tweets;
+	}
+
 	/**
 	 * Calculate the time ago in days, hours, whichever is the most significant
 	 * 

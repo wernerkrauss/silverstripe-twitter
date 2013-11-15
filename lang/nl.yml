@@ -1,0 +1,5 @@
+nl:
+  SearchTwitterWidget:
+    CMSTITLE: Twitter Search Feed
+    DESCRIPTION: Toon tweets die gevonden worden bij een zoekopdracht in de sidebar
+    FIELD_QUERY: Query

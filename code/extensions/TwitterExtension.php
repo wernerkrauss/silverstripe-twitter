@@ -54,4 +54,27 @@ class TwitterExtension extends Extension {
 		return $items;
 	}
 	
+	/**
+	 * Retrieves (up to) the last $count tweets searched by the $query
+	 * 
+	 * Note: Actual returned number may be less than 10 due to reasons
+	 * 
+	 * @param integer $count
+	 * @return ArrayList
+	 */
+	public function SearchTweets($query, $count = 10) {
+		$items = new ArrayList();
+	
+		if (empty($query))
+		{
+			return $items;
+		}
+		
+		$tweets = $this->twitterService->searchTweets($query, $count);
+		foreach ($tweets as $tweet) {
+			$tweet['DateObject'] = DBField::create_field('SS_DateTime', $tweet['Date']);
+			$items->push(new ArrayData($tweet));
+		}
+		return $items;
+	}
 }

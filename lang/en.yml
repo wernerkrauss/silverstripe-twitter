@@ -1,0 +1,5 @@
+en:
+  SearchTwitterWidget:
+    CMSTITLE: Twitter Search Feed
+    DESCRIPTION: Shows the searched twitter posts in the sidebar.
+    FIELD_QUERY: Query
