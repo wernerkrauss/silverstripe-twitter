@@ -3,3 +3,8 @@ en:
     CMSTITLE: Twitter Search Feed
     DESCRIPTION: Shows the searched twitter posts in the sidebar.
     FIELD_QUERY: Query
+  UserTwitterWidget:
+    CMSTITLE: Twitter User Feed
+    DESCRIPTION: Shows the twitter posts from a user in the sidebar.
+    FIELD_USER: User
+    
