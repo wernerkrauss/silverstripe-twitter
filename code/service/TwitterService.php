@@ -54,8 +54,7 @@ class TwitterService implements ITwitterService {
 	function searchTweets($query, $count) {
 	
 		$tweets = array();
-		if (!empty($query))
-		{
+		if (!empty($query)) {
 			// Call rest api
 			$arguments = http_build_query(array(
 					'q' => Convert::raw2sql($query),
@@ -66,8 +65,7 @@ class TwitterService implements ITwitterService {
 			$response = $connection->get("https://api.twitter.com/1.1/search/tweets.json?$arguments");
 		
 			// Parse all tweets
-			if ($response)
-			{
+			if ($response) {
 			 	foreach ($response->statuses as $tweet) {
 					$tweets[] = $this->parseTweet($tweet);
 				}

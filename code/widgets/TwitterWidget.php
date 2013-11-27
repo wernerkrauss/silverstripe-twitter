@@ -20,22 +20,18 @@ if (class_exists('Widget')) {
 			'TweetCount' => 3
 		);
 
-		public function Title()
-		{
-			if ($this->Title)
-			{
+		public function Title() {
+			if ($this->Title) {
 				return $this->Title;
 			}
 			return _t('TwitterWidget.WIDGETTITLE', 'Twitter Feed');
 		}
 		
-		public function CMSTitle()
-		{
+		public function CMSTitle() {
 			return _t('TwitterWidget.CMSTITLE', 'Twitter Feed');
 		}
 		
-		public function Description()
-		{
+		public function Description() {
 			return _t('TwitterWidget.DESCRIPTION', 'Shows twitter posts in the sidebar.');
 		}
 

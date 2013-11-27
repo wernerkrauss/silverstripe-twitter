@@ -39,8 +39,7 @@ class TwitterExtension extends Extension {
 	 * @param integer $count
 	 * @return ArrayList
 	 */
-	public function LatestTweets($count = 10)
-	{
+	public function LatestTweets($count = 10) {
 		$user = SiteConfig::current_site_config()->TwitterUsername;
 		$this->LatestTweetsUser($user, $count);
 	}
@@ -57,10 +56,7 @@ class TwitterExtension extends Extension {
 		$items = new ArrayList();
 		
 		// Check that the twitter user is configured
-		if (empty($user))
-		{
-			return $items;
-		}
+		if (empty($user))  return $items;
 		
 		$tweets = $this->twitterService->getTweets($user, $count);
 		foreach ($tweets as $tweet) {
@@ -81,10 +77,7 @@ class TwitterExtension extends Extension {
 	public function SearchTweets($query, $count = 10) {
 		$items = new ArrayList();
 	
-		if (empty($query))
-		{
-			return $items;
-		}
+		if (empty($query)) return $items;
 		
 		$tweets = $this->twitterService->searchTweets($query, $count);
 		foreach ($tweets as $tweet) {
