@@ -40,12 +40,24 @@ class TwitterExtension extends Extension {
 	 * @return ArrayList
 	 */
 	public function LatestTweets($count = 10) {
+		$user = SiteConfig::current_site_config()->TwitterUsername;
+		$this->LatestTweetsUser($user, $count);
+	}
+
+	/**
+	 * Retrieves (up to) the last $count tweets from $user.
+	 *
+	 * Note: Actual returned number may be less than 10 due to reasons
+	 *
+	 * @param integer $count
+	 * @return ArrayList
+	 */
+	public function LatestTweetsUser($user, $count = 10) {
 		$items = new ArrayList();
 		
 		// Check that the twitter user is configured
-		$user = SiteConfig::current_site_config()->TwitterUsername;
-		if (empty($user)) return $items;
-
+		if (empty($user))  return $items;
+		
 		$tweets = $this->twitterService->getTweets($user, $count);
 		foreach ($tweets as $tweet) {
 			$tweet['DateObject'] = DBField::create_field('SS_DateTime', $tweet['Date']);
@@ -54,4 +66,24 @@ class TwitterExtension extends Extension {
 		return $items;
 	}
 	
+	/**
+	 * Retrieves (up to) the last $count tweets searched by the $query
+	 * 
+	 * Note: Actual returned number may be less than 10 due to reasons
+	 * 
+	 * @param integer $count
+	 * @return ArrayList
+	 */
+	public function SearchTweets($query, $count = 10) {
+		$items = new ArrayList();
+	
+		if (empty($query)) return $items;
+		
+		$tweets = $this->twitterService->searchTweets($query, $count);
+		foreach ($tweets as $tweet) {
+			$tweet['DateObject'] = DBField::create_field('SS_DateTime', $tweet['Date']);
+			$items->push(new ArrayData($tweet));
+		}
+		return $items;
+	}
 }
