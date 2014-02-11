@@ -41,7 +41,22 @@ class TwitterExtension extends Extension {
 	 */
 	public function LatestTweets($count = 10) {
 		$user = SiteConfig::current_site_config()->TwitterUsername;
-		$this->LatestTweetsUser($user, $count);
+		return $this->LatestTweetsUser($user, $count);
+	}
+	
+	/**
+	 * Converts an array of tweets into a template-compatible format
+	 * 
+	 * @param array $tweets
+	 * @return ArrayList
+	 */
+	protected function viewableTweets($tweets) {
+		$items = new ArrayList();
+		foreach ($tweets as $tweet) {
+			$tweet['DateObject'] = DBField::create_field('SS_DateTime', $tweet['Date']);
+			$items->push(new ArrayData($tweet));
+		}
+		return $items;
 	}
 
 	/**
@@ -49,21 +64,17 @@ class TwitterExtension extends Extension {
 	 *
 	 * Note: Actual returned number may be less than 10 due to reasons
 	 *
-	 * @param integer $count
-	 * @return ArrayList
+	 * @param string $user Username to search for
+	 * @param integer $count Number of tweets
+	 * @return ArrayList List of tweets
 	 */
 	public function LatestTweetsUser($user, $count = 10) {
-		$items = new ArrayList();
 		
 		// Check that the twitter user is configured
-		if (empty($user))  return $items;
+		if (empty($user)) return null;
 		
 		$tweets = $this->twitterService->getTweets($user, $count);
-		foreach ($tweets as $tweet) {
-			$tweet['DateObject'] = DBField::create_field('SS_DateTime', $tweet['Date']);
-			$items->push(new ArrayData($tweet));
-		}
-		return $items;
+		return $this->viewableTweets($tweets);
 	}
 	
 	/**
@@ -71,19 +82,15 @@ class TwitterExtension extends Extension {
 	 * 
 	 * Note: Actual returned number may be less than 10 due to reasons
 	 * 
-	 * @param integer $count
-	 * @return ArrayList
+	 * @param string $query Search terms
+	 * @param integer $count Number of tweets
+	 * @return ArrayList List of tweets
 	 */
 	public function SearchTweets($query, $count = 10) {
-		$items = new ArrayList();
-	
-		if (empty($query)) return $items;
+		
+		if (empty($query)) return null;
 		
 		$tweets = $this->twitterService->searchTweets($query, $count);
-		foreach ($tweets as $tweet) {
-			$tweet['DateObject'] = DBField::create_field('SS_DateTime', $tweet['Date']);
-			$items->push(new ArrayData($tweet));
-		}
-		return $items;
+		return $this->viewableTweets($tweets);
 	}
 }
