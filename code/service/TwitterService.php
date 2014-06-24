@@ -44,8 +44,10 @@ class TwitterService implements ITwitterService {
 
 		// Parse all tweets
 		$tweets = array();
-		if ($response) foreach ($response as $tweet) {
-			$tweets[] = $this->parseTweet($tweet);
+		if ($response && is_array($response)) {
+			foreach ($response as $tweet) {
+				$tweets[] = $this->parseTweet($tweet);
+			}
 		}
 
 		return $tweets;
