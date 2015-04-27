@@ -28,7 +28,8 @@ class TwitterExtension extends Extension {
 	 * @return ArrayData
 	 */
 	public function LatestTweet() {
-		return $this->LatestTweets()->first();
+		$latestTweets = $this->LatestTweets();
+		return $latestTweets ? $latestTweets->first() : null;
 	}
 	
 	/**
