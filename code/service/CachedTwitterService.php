@@ -48,7 +48,9 @@ class CachedTwitterService implements ITwitterService {
 		$cache = SS_Cache::factory('CachedTwitterService');
 		
 		// Return cached value, if available
-		if($rawResult = $cache->load($cacheKey)) return unserialize($rawResult);
+		if($rawResult = $cache->load($cacheKey)) {
+			return unserialize($rawResult);
+		}
 		
 		// Save and return
 		$result = $this->cachedService->getFavorites($user, $count);

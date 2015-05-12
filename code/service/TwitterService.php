@@ -170,10 +170,16 @@ class TwitterService implements ITwitterService {
 
 		$profileLink = "https://twitter.com/" . Convert::raw2url($tweet->user->screen_name);
 		$tweetID = $tweet->id_str;
+		
+		//
+		// Date format.
+		//
+		$d = SS_DateTime::create();
+		$d->setValue($tweet->created_at);
 
 		return array(
 			'ID' => $tweetID,
-			'Date' => $tweet->created_at,
+			'Date' => $d,
 			'TimeAgo' => self::determine_time_ago($tweet->created_at),
 			'Name' => $tweet->user->name,
 			'User' => $tweet->user->screen_name,
