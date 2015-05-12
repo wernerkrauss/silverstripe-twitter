@@ -45,6 +45,21 @@ class TwitterExtension extends Extension {
 		return $this->LatestTweetsUser($user, $count);
 	}
 	
+	
+	/**
+	 * Retrieves (up to) the last $count favourite tweets.
+	 * 
+	 * Note: Actual returned number may be less than 10 due to reasons
+	 * 
+	 * @param integer $count
+	 * @return ArrayList
+	 */
+	public function Favorites($count = 4) {
+		$user = SiteConfig::current_site_config()->TwitterUsername;
+		
+		return new ArrayList($this->twitterService->getFavorites($user, $count));
+	}
+	
 	/**
 	 * Converts an array of tweets into a template-compatible format
 	 * 
