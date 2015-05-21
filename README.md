@@ -60,6 +60,7 @@ Each tweet object has the following properties:
  * Name - Real name of poster
  * Content - Tweet HTML
  * Link - Link to tweet
+ * AvatarUrl - Link to poster's Avatar
  * ProfileLink - Link to author profile
  * ReplyLink - Link to reply to this tweet
  * RetweetLink - Linke to retweet this tweet
