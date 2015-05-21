@@ -48,6 +48,7 @@ Tweets can be retrieved with one of the following controller functions (inside a
 
  * $LatestTweets('10') - Returns up to the specified number of tweets (defaults to 10 if no count specified)
  * $LatestTweet - Returns the latest tweet
+ * $Favorite('4') - Returns up to the specified number of favorite tweets (defaults to 4 if no count specified)
 
 Each tweet object has the following properties:
 

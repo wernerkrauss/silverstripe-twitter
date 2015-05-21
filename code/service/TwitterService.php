@@ -52,6 +52,34 @@ class TwitterService implements ITwitterService {
 
 		return $tweets;
 	}
+	
+	/**
+	 * get favourite tweets associated with the user.
+	 * */
+	function getFavorites($user, $count) {
+
+		// Check user
+		if (empty($user)) return null;
+
+		// Call rest api
+		$arguments = http_build_query(array(
+			'screen_name' => $user,
+			'count' => $count
+		));
+		$connection = $this->getConnection();
+		$response = $connection->get("https://api.twitter.com/1.1/favorites/list.json?$arguments");
+
+		// Parse all tweets
+		$tweets = array();
+		if ($response && is_array($response)) {
+			
+			foreach ($response as $tweet) {
+				$tweets[] = $this->parseTweet($tweet);
+			}
+		}
+
+		return $tweets;
+	}
 
 	function searchTweets($query, $count) {
 	
@@ -142,10 +170,16 @@ class TwitterService implements ITwitterService {
 
 		$profileLink = "https://twitter.com/" . Convert::raw2url($tweet->user->screen_name);
 		$tweetID = $tweet->id_str;
+		
+		//
+		// Date format.
+		//
+		$d = SS_DateTime::create();
+		$d->setValue($tweet->created_at);
 
 		return array(
 			'ID' => $tweetID,
-			'Date' => $tweet->created_at,
+			'Date' => $d,
 			'TimeAgo' => self::determine_time_ago($tweet->created_at),
 			'Name' => $tweet->user->name,
 			'User' => $tweet->user->screen_name,
