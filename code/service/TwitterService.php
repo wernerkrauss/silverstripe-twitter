@@ -218,6 +218,33 @@ class TwitterService implements ITwitterService {
 	}
 
 	/**
+	 * Inject photo media into the body of a tweet
+	 * 
+	 * @param array $tokens List of characters/words that make up the tweet body,
+	 * with each index representing the visible character position of the body text
+	 * (excluding markup).
+	 * @param stdObject $entity The photo media object 
+	 */
+	protected function injectPhoto(&$tokens, $entity) {
+		$startPos = $entity->indices[0];
+		$endPos = $entity->indices[1];
+
+		// Inject a+image tag at the last token position
+		$tokens[$endPos] = sprintf(
+			"<a href='%s' title='%s'><img src='%s' width='%s' height='%s' target='_blank' /></a>",
+			Convert::raw2att($entity->url),
+			Convert::raw2att($entity->display_url),
+			Convert::raw2att($entity->media_url),
+			Convert::raw2att($entity->sizes->small->w),
+			Convert::raw2att($entity->sizes->small->h)
+		);
+		
+		// now empty-out the preceding tokens
+		for($i = $startPos; $i < $endPos; $i++){ $tokens[$i] = ''; }
+	}
+	
+
+	/**
 	 * Parse the tweet object into a HTML block
 	 * 
 	 * @param stdObject $tweet Tweet object
@@ -246,6 +273,16 @@ class TwitterService implements ITwitterService {
 		foreach ($tweet->entities->user_mentions as $mention) {
 			$link = 'https://twitter.com/' . Convert::raw2url($mention->screen_name);
 			$this->injectLink($tokens, $mention, $link, $mention->name);
+		}
+
+		// Inject photos
+		// unlike urls & hashtags &tc, media is not always defined
+		if(property_exists($tweet->entities, 'media')){
+			foreach ($tweet->entities->media as $med_item) {
+				if($med_item->type == 'photo'){
+					$this->injectPhoto($tokens, $med_item);
+				}
+			}
 		}
 
 		// Re-combine tokens
