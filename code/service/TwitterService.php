@@ -13,6 +13,11 @@ require_once __DIR__ . "/../../thirdparty/twitteroauth/twitteroauth/twitteroauth
  * @package twitter
  */
 class TwitterService implements ITwitterService {
+	
+	/**
+	 * @config use https for inserted media (prevents mixed content warnings on SSL websites)
+	 */
+	private static $use_https = false;
 
 	/**
 	 * Generate a new TwitterOAuth connection
@@ -170,6 +175,7 @@ class TwitterService implements ITwitterService {
 
 		$profileLink = "https://twitter.com/" . Convert::raw2url($tweet->user->screen_name);
 		$tweetID = $tweet->id_str;
+		$https = ( Config::inst()->get(get_class(),"use_https") ? "_https" : "" );
 		
 		//
 		// Date format.
@@ -183,7 +189,7 @@ class TwitterService implements ITwitterService {
 			'TimeAgo' => self::determine_time_ago($tweet->created_at),
 			'Name' => $tweet->user->name,
 			'User' => $tweet->user->screen_name,
-			'AvatarUrl' => $tweet->user->profile_image_url,
+			'AvatarUrl' => $tweet->user->{"profile_image_url$https"},
 			'Content' => $this->parseText($tweet),
 			'Link' => "{$profileLink}/status/{$tweetID}",
 			'ProfileLink' => $profileLink,
@@ -228,13 +234,14 @@ class TwitterService implements ITwitterService {
 	protected function injectPhoto(&$tokens, $entity) {
 		$startPos = $entity->indices[0];
 		$endPos = $entity->indices[1];
+		$https = ( Config::inst()->get(get_class(),"use_https") ? "_https" : "" );
 
 		// Inject a+image tag at the last token position
 		$tokens[$endPos] = sprintf(
 			"<a href='%s' title='%s'><img src='%s' width='%s' height='%s' target='_blank' /></a>",
 			Convert::raw2att($entity->url),
 			Convert::raw2att($entity->display_url),
-			Convert::raw2att($entity->media_url),
+			Convert::raw2att($entity->{"media_url$https"}),
 			Convert::raw2att($entity->sizes->small->w),
 			Convert::raw2att($entity->sizes->small->h)
 		);
