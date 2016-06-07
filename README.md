@@ -66,6 +66,14 @@ Each tweet object has the following properties:
  * RetweetLink - Linke to retweet this tweet
  * FavouriteLink - Link to add this tweet to favourites
 
+## Config
+
+To use SSL on inserted media (prevents mixed content warnings on SSL websites), add to config.yml:
+```yml
+TwitterService:
+  use_https: true
+```
+
 ## Need more help?
 
 Message or email me at damian.mooyman@gmail.com or, well, read the code!
