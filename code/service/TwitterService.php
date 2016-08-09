@@ -42,7 +42,8 @@ class TwitterService implements ITwitterService {
 		$arguments = http_build_query(array(
 			'screen_name' => $user,
 			'count' => $count,
-			'include_rts' => true
+			'include_rts' => SiteConfig::current_site_config()->TwitterIncludeRTs,
+			'exclude_replies' => SiteConfig::current_site_config()->TwitterExcludeReplies
 		));
 		$connection = $this->getConnection();
 		$response = $connection->get("https://api.twitter.com/1.1/statuses/user_timeline.json?$arguments");
