@@ -216,12 +216,13 @@ class TwitterService implements ITwitterService {
 
 		// Inject <a tag at the start
 		$tokens[$startPos] = sprintf(
-			"<a href='%s' title='%s' target='_blank'>%s",
+			"<a href='%s' title='%s' target='_blank'>%s</a>",
 			Convert::raw2att($link),
 			Convert::raw2att($title),
-			$tokens[$startPos]
+			Convert::raw2att($title)
 		);
-		$tokens[$endPos - 1] = sprintf("%s</a>", $tokens[$endPos - 1]);
+		$characters = $endPos - $startPos - 1;
+		array_splice($tokens, $startPos + 1, $characters, array_fill($startPos + 1, $characters, ''));
 	}
 
 	/**
@@ -266,7 +267,7 @@ class TwitterService implements ITwitterService {
 
 		// Inject links
 		foreach ($tweet->entities->urls as $url) {
-			$this->injectLink($tokens, $url, $url->url, $url->expanded_url);
+			$this->injectLink($tokens, $url, $url->url, $url->display_url);
 		}
 
 		// Inject hashtags
@@ -280,7 +281,7 @@ class TwitterService implements ITwitterService {
 		// Inject mentions
 		foreach ($tweet->entities->user_mentions as $mention) {
 			$link = 'https://twitter.com/' . Convert::raw2url($mention->screen_name);
-			$this->injectLink($tokens, $mention, $link, $mention->name);
+			$this->injectLink($tokens, $mention, $link, '@'.$mention->name);
 		}
 
 		// Inject photos
