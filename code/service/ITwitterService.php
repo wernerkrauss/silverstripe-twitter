@@ -1,20 +1,22 @@
 <?php
 
+namespace SilverStripe\Twitter\Services;
+
 /**
  * Interface for a twitter service
- * 
+ *
  * @author Damian Mooyman
- * 
+ *
  * @package twitter
  */
 interface ITwitterService {
-	
+
 	/**
 	 * Retrieves a list of tweets, each given as an associative array with the
 	 * keys 'Date', 'User' and 'Content'
-	 * 
+	 *
 	 * @param string $user Name of user to search for tweets from
-	 * @param string $count Number of tweets to return 
+	 * @param string $count Number of tweets to return
 	 * @return array Array of nested associative arrays, each representing details of a single tweet
 	 */
 	function getTweets($user, $count);
@@ -27,5 +29,5 @@ interface ITwitterService {
 	 * @param string $count Number of tweets to return
 	 * @return array Array of nested associative arrays, each representing details of a single tweet
 	 */
-	function searchTweets($query, $count);	
+	function searchTweets($query, $count);
 }

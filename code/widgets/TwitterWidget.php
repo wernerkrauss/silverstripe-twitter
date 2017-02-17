@@ -1,11 +1,18 @@
 <?php
+
+namespace SilverStripe\Twitter\Widgets;
+
+use SilverStripe\Control\Controller;
+use SilverStripe\Forms\NumericField;
+use SilverStripe\Forms\TextField;
+
 if (class_exists('Widget')) {
 
 	/**
 	 * Adds sidebar widget for twitter
-	 * 
+	 *
 	 * @author Damian Mooyman
-	 * 
+	 *
 	 * @package twitter
 	 */
 	class TwitterWidget extends Widget {
@@ -26,11 +33,11 @@ if (class_exists('Widget')) {
 			}
 			return _t('TwitterWidget.WIDGETTITLE', 'Twitter Feed');
 		}
-		
+
 		public function CMSTitle() {
 			return _t('TwitterWidget.CMSTITLE', 'Twitter Feed');
 		}
-		
+
 		public function Description() {
 			return _t('TwitterWidget.DESCRIPTION', 'Shows twitter posts in the sidebar.');
 		}

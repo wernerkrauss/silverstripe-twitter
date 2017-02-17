@@ -1,14 +1,21 @@
 <?php
 
+namespace SilverStripe\Twitter\Extensions;
+
+use SilverStripe\Forms\CheckboxField;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\TextField;
+use SilverStripe\ORM\DataExtension;
+
 /**
  * Sets twitter configuration in the SiteConfig
- * 
+ *
  * @author Damian Mooyman
- * 
+ *
  * @package twitter
  */
 class TwitterSiteConfig extends DataExtension {
-	
+
 	private static $db = array(
 		'TwitterUsername' => 'Varchar(255)',
 		'TwitterAppConsumerKey' => 'Varchar(255)',
@@ -18,9 +25,9 @@ class TwitterSiteConfig extends DataExtension {
 		'TwitterIncludeRTs' => 'Boolean',
 		'TwitterExcludeReplies' => 'Boolean'
 	);
-	
+
 	public function updateCMSFields(FieldList $fields) {
-		
+
 		// Twitter setup
 		$fields->addFieldsToTab('Root.TwitterApp', array(
 			$userNameField = new TextField('TwitterUsername', _t('TwitterSiteConfig.FIELD_TWITTER_USERNAME', 'Twitter Username'), null, 255),

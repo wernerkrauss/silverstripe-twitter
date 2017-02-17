@@ -1,22 +1,22 @@
 ---
 Name: twitterconfig
 ---
-Injector:
+SilverStripe\Core\Injector:
   TwitterService:
-    class: CachedTwitterService
+    class: SilverStripe\Twitter\Services\CachedTwitterService
     constructor:
       - %$WebTwitterService
   WebTwitterService:
-    class: TwitterService
-TwitterExtension:
+    class: SilverStripe\Twitter\Services\TwitterService
+SilverStripe\Twitter\Extensions\TwitterExtension:
   dependencies:
     TwitterService: %$TwitterService
-Page_Controller:
+PageController:
   extensions:
-    - TwitterExtension
-SiteConfig:
+    - SilverStripe\Twitter\Extensions\TwitterExtension
+SilverStripe\SiteConfig\SiteConfig:
   extensions:
-    - TwitterSiteConfig
-CachedTwitterService:
+    - SilverStripe\Twitter\Extensions\TwitterSiteConfig
+SilverStripe\Twitter\Services\CachedTwitterService:
 # Lifetime in seconds of cache
   lifetime: 300

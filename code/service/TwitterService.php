@@ -1,19 +1,26 @@
 <?php
+
+namespace SilverStripe\Twitter\Services;
 // Require third party lib
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Core\Convert;
+use SilverStripe\SiteConfig\SiteConfig;
+use TwitterOAuth;
+
 require_once __DIR__ . "/../../thirdparty/twitteroauth/twitteroauth/twitteroauth.php";
 
 /**
  * JSON powered twitter service
- * 
+ *
  * @link http://www.webdevdoor.com/javascript-ajax/custom-twitter-feed-integration-jquery/
  * @link http://www.webdevdoor.com/php/authenticating-twitter-feed-timeline-oauth/
- * 
+ *
  * @author Damian Mooyman
- * 
+ *
  * @package twitter
  */
 class TwitterService implements ITwitterService {
-	
+
 	/**
 	 * @config use https for inserted media (prevents mixed content warnings on SSL websites)
 	 */
@@ -21,7 +28,7 @@ class TwitterService implements ITwitterService {
 
 	/**
 	 * Generate a new TwitterOAuth connection
-	 * 
+	 *
 	 * @return TwitterOAuth
 	 */
 	protected function getConnection() {
@@ -58,7 +65,7 @@ class TwitterService implements ITwitterService {
 
 		return $tweets;
 	}
-	
+
 	/**
 	 * get favourite tweets associated with the user.
 	 * */
@@ -78,7 +85,7 @@ class TwitterService implements ITwitterService {
 		// Parse all tweets
 		$tweets = array();
 		if ($response && is_array($response)) {
-			
+
 			foreach ($response as $tweet) {
 				$tweets[] = $this->parseTweet($tweet);
 			}
@@ -88,7 +95,7 @@ class TwitterService implements ITwitterService {
 	}
 
 	function searchTweets($query, $count) {
-	
+
 		$tweets = array();
 		if (!empty($query)) {
 			// Call rest api
@@ -99,7 +106,7 @@ class TwitterService implements ITwitterService {
 			));
 			$connection = $this->getConnection();
 			$response = $connection->get("https://api.twitter.com/1.1/search/tweets.json?$arguments");
-		
+
 			// Parse all tweets
 			if ($response) {
 			 	foreach ($response->statuses as $tweet) {
@@ -107,13 +114,13 @@ class TwitterService implements ITwitterService {
 				}
 			}
 		}
-	
+
 		return $tweets;
 	}
 
 	/**
 	 * Calculate the time ago in days, hours, whichever is the most significant
-	 * 
+	 *
 	 * @param string $time Input time as a string
 	 * @param integer $detail Number of time periods to display. Increasing provides greater time detail.
 	 * @return string
@@ -133,13 +140,13 @@ class TwitterService implements ITwitterService {
 			60 => 'min',
 			1 => 'sec'
 		);
-		
+
 		$items = array();
 
 		foreach ($periods as $seconds => $description) {
 			// Break if reached the sufficient level of detail
 			if(count($items) >= $detail) break;
-			
+
 			// If this is the last element in the chain, round the value.
 			// Otherwise, take the floor of the time difference
 			$quantity = $difference / $seconds;
@@ -148,10 +155,10 @@ class TwitterService implements ITwitterService {
 			} else  {
 				$quantity = intval($quantity);
 			}
-			
+
 			// Check that the current period is smaller than the current time difference
 			if($quantity <= 0) continue;
-			
+
 			// Append period to total items and continue calculation with remainder
 			if($quantity !== 1) $description .= 's';
 			$items[] = $quantity.' '. _t("Date.".strtoupper($description), $description);
@@ -168,7 +175,7 @@ class TwitterService implements ITwitterService {
 
 	/**
 	 * Converts a tweet response into a simple associative array of fields
-	 * 
+	 *
 	 * @param stdObject $tweet Tweet object
 	 * @return array Array of fields with Date, User, and Content as keys
 	 */
@@ -177,11 +184,11 @@ class TwitterService implements ITwitterService {
 		$profileLink = "https://twitter.com/" . Convert::raw2url($tweet->user->screen_name);
 		$tweetID = $tweet->id_str;
 		$https = ( Config::inst()->get(get_class(),"use_https") ? "_https" : "" );
-		
+
 		//
 		// Date format.
 		//
-		$d = SS_DateTime::create();
+		$d = \SS_DateTime::create();
 		$d->setValue($tweet->created_at);
 
 		return array(
@@ -202,11 +209,11 @@ class TwitterService implements ITwitterService {
 
 	/**
 	 * Inject a hyperlink into the body of a tweet
-	 * 
+	 *
 	 * @param array $tokens List of characters/words that make up the tweet body,
 	 * with each index representing the visible character position of the body text
 	 * (excluding markup).
-	 * @param stdObject $entity The link object 
+	 * @param stdObject $entity The link object
 	 * @param string $link 'href' tag for the link
 	 * @param string $title 'title' tag for the link
 	 */
@@ -227,11 +234,11 @@ class TwitterService implements ITwitterService {
 
 	/**
 	 * Inject photo media into the body of a tweet
-	 * 
+	 *
 	 * @param array $tokens List of characters/words that make up the tweet body,
 	 * with each index representing the visible character position of the body text
 	 * (excluding markup).
-	 * @param stdObject $entity The photo media object 
+	 * @param stdObject $entity The photo media object
 	 */
 	protected function injectPhoto(&$tokens, $entity) {
 		$startPos = $entity->indices[0];
@@ -247,15 +254,15 @@ class TwitterService implements ITwitterService {
 			Convert::raw2att($entity->sizes->small->w),
 			Convert::raw2att($entity->sizes->small->h)
 		);
-		
+
 		// now empty-out the preceding tokens
 		for($i = $startPos; $i < $endPos; $i++){ $tokens[$i] = ''; }
 	}
-	
+
 
 	/**
 	 * Parse the tweet object into a HTML block
-	 * 
+	 *
 	 * @param stdObject $tweet Tweet object
 	 * @return string HTML text
 	 */
