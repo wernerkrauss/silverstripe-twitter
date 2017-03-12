@@ -4,6 +4,7 @@ namespace SilverStripe\Twitter\Extensions;
 
 use SilverStripe\Core\Extension;
 use SilverStripe\ORM\ArrayList;
+use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\Twitter\Services\ITwitterService;
@@ -78,7 +79,7 @@ class TwitterExtension extends Extension {
 	protected function viewableTweets($tweets) {
 		$items = new ArrayList();
 		foreach ($tweets as $tweet) {
-			$tweet['DateObject'] = DBField::create_field('SS_DateTime', $tweet['Date']);
+			$tweet['DateObject'] = DBField::create_field('SilverStripe\ORM\FieldType\DBDateTime', $tweet['Date']);
 			$items->push(new ArrayData($tweet));
 		}
 		return $items;

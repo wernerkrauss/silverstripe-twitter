@@ -4,6 +4,7 @@ namespace SilverStripe\Twitter\Services;
 // Require third party lib
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Convert;
+use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\SiteConfig\SiteConfig;
 use TwitterOAuth;
 
@@ -188,13 +189,13 @@ class TwitterService implements ITwitterService {
 		//
 		// Date format.
 		//
-		$d = \SS_DateTime::create();
-		$d->setValue($tweet->created_at);
+		$tweetDate = \DateTime::createFromFormat('D M j H:i:s O Y', $tweet->created_at);
+		$d = DBDatetime::create()->setValue($tweetDate->getTimestamp());
 
 		return array(
 			'ID' => $tweetID,
 			'Date' => $d,
-			'TimeAgo' => self::determine_time_ago($tweet->created_at),
+			'TimeAgo' => self::determine_time_ago($tweetDate->getTimestamp()),
 			'Name' => $tweet->user->name,
 			'User' => $tweet->user->screen_name,
 			'AvatarUrl' => $tweet->user->{"profile_image_url$https"},

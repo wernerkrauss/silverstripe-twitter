@@ -8,12 +8,12 @@ This module puts a simple twitter feed into your page. Nothing fancy!
 
 ## Requirements
 
- * SilverStripe 3.1 or above
- * PHP 5.3
+ * SilverStripe 4.0 or above
+ * PHP 5.4
 
 ## Installation Instructions
 
- * Extract all files into the 'twitter' folder under your Silverstripe root, or install using composer
+ * Extract all files into the 'twitter' folder under your SilverStripe root, or install using composer
 
 ```bash
 composer require "tractorcow/silverstripe-twitter" "3.1.*@dev"
@@ -35,7 +35,7 @@ composer require "tractorcow/silverstripe-twitter" "3.1.*@dev"
 					<a href="http://www.twitter.com/{$User}" target="_blank" class="User">@$User</a>
 					$DateObject.format('d F Y')
 				</label>
-				<p>$Content</p>
+				<p>$Content.RAW</p>
 			</li>
 		<% end_loop %>
 	</ul>

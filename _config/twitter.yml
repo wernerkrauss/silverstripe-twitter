@@ -2,15 +2,15 @@
 Name: twitterconfig
 ---
 SilverStripe\Core\Injector:
-  TwitterService:
+  SilverStripe\Twitter\Services\TwitterService:
     class: SilverStripe\Twitter\Services\CachedTwitterService
     constructor:
       - %$WebTwitterService
-  WebTwitterService:
+  SilverStripe\Twitter\Services\WebTwitterService:
     class: SilverStripe\Twitter\Services\TwitterService
 SilverStripe\Twitter\Extensions\TwitterExtension:
   dependencies:
-    TwitterService: %$TwitterService
+    TwitterService: %$SilverStripe\Twitter\Services\TwitterService
 PageController:
   extensions:
     - SilverStripe\Twitter\Extensions\TwitterExtension
