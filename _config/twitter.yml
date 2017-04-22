@@ -8,6 +8,10 @@ SilverStripe\Core\Injector:
       - %$WebTwitterService
   TractorCow\Twitter\Services\WebTwitterService:
     class: TractorCow\Twitter\Services\TwitterService
+  Psr\SimpleCache\CacheInterface.cachedTwitterService:
+    factory: SilverStripe\Core\Cache\CacheFactory
+    constructor:
+      namespace: 'cachedTwitterService'
 TractorCow\Twitter\Extensions\TwitterExtension:
   dependencies:
     TwitterService: %$TractorCow\Twitter\Services\TwitterService
