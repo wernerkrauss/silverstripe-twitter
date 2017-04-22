@@ -5,8 +5,9 @@ namespace TractorCow\Twitter\Widgets;
 use SilverStripe\Control\Controller;
 use SilverStripe\Forms\NumericField;
 use SilverStripe\Forms\TextField;
+use SilverStripe\Widgets\Model\Widget;
 
-if (class_exists('Widget')) {
+if (class_exists('SilverStripe\Widgets\Model\Widget')) {
 
 	/**
 	 * Adds sidebar widget for twitter
