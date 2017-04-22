@@ -2,21 +2,21 @@
 Name: twitterconfig
 ---
 SilverStripe\Core\Injector:
-  SilverStripe\Twitter\Services\TwitterService:
-    class: SilverStripe\Twitter\Services\CachedTwitterService
+  TractorCow\Twitter\Services\TwitterService:
+    class: TractorCow\Twitter\Services\CachedTwitterService
     constructor:
       - %$WebTwitterService
-  SilverStripe\Twitter\Services\WebTwitterService:
-    class: SilverStripe\Twitter\Services\TwitterService
-SilverStripe\Twitter\Extensions\TwitterExtension:
+  TractorCow\Twitter\Services\WebTwitterService:
+    class: TractorCow\Twitter\Services\TwitterService
+TractorCow\Twitter\Extensions\TwitterExtension:
   dependencies:
-    TwitterService: %$SilverStripe\Twitter\Services\TwitterService
+    TwitterService: %$TractorCow\Twitter\Services\TwitterService
 PageController:
   extensions:
-    - SilverStripe\Twitter\Extensions\TwitterExtension
+    - TractorCow\Twitter\Extensions\TwitterExtension
 SilverStripe\SiteConfig\SiteConfig:
   extensions:
-    - SilverStripe\Twitter\Extensions\TwitterSiteConfig
-SilverStripe\Twitter\Services\CachedTwitterService:
+    - TractorCow\Twitter\Extensions\TwitterSiteConfig
+TractorCow\Twitter\Services\CachedTwitterService:
 # Lifetime in seconds of cache
   lifetime: 300

@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverStripe\Twitter\Services;
+namespace TractorCow\Twitter\Services;
 
 /**
  * Interface for a twitter service

@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverStripe\Twitter\Widgets;
+namespace TractorCow\Twitter\Widgets;
 
 use SilverStripe\Control\Controller;
 use SilverStripe\Forms\NumericField;

@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverStripe\Twitter\Services;
+namespace TractorCow\Twitter\Services;
 // Require third party lib
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Convert;

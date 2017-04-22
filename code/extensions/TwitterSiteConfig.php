@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverStripe\Twitter\Extensions;
+namespace TractorCow\Twitter\Extensions;
 
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\FieldList;

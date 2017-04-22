@@ -1,13 +1,13 @@
 <?php
 
-namespace SilverStripe\Twitter\Extensions;
+namespace TractorCow\Twitter\Extensions;
 
 use SilverStripe\Core\Extension;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\SiteConfig\SiteConfig;
-use SilverStripe\Twitter\Services\ITwitterService;
+use TractorCow\Twitter\Services\ITwitterService;
 use SilverStripe\View\ArrayData;
 
 /**

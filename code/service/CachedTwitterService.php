@@ -1,8 +1,9 @@
 <?php
 
-namespace SilverStripe\Twitter\Services;
+namespace TractorCow\Twitter\Services;
 
 use SilverStripe\Core\Config\Config;
+use SS_Cache;
 
 /**
  * Caches a wrapped twitter service
@@ -25,7 +26,7 @@ class CachedTwitterService implements ITwitterService {
 	function getTweets($user, $count) {
 		// Init caching
 		$cacheKey = "getTweets_{$user}_{$count}";
-		$cache = \SS_Cache::factory('CachedTwitterService');
+		$cache = SS_Cache::factory('CachedTwitterService');
 
 		// Return cached value, if available
 		if($rawResult = $cache->load($cacheKey)) return unserialize($rawResult);
