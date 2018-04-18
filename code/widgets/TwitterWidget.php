@@ -3,9 +3,9 @@ if (class_exists('Widget')) {
 
     /**
      * Adds sidebar widget for twitter
-     * 
+     *
      * @author Damian Mooyman
-     * 
+     *
      * @package twitter
      */
     class TwitterWidget extends Widget

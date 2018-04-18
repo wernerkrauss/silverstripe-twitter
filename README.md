@@ -48,6 +48,7 @@ Tweets can be retrieved with one of the following controller functions (inside a
 
  * $LatestTweets('10') - Returns up to the specified number of tweets (defaults to 10 if no count specified)
  * $LatestTweet - Returns the latest tweet
+ * $Favorite('4') - Returns up to the specified number of favorite tweets (defaults to 4 if no count specified)
 
 Each tweet object has the following properties:
 
@@ -59,10 +60,19 @@ Each tweet object has the following properties:
  * Name - Real name of poster
  * Content - Tweet HTML
  * Link - Link to tweet
+ * AvatarUrl - Link to poster's Avatar
  * ProfileLink - Link to author profile
  * ReplyLink - Link to reply to this tweet
  * RetweetLink - Linke to retweet this tweet
  * FavouriteLink - Link to add this tweet to favourites
+
+## Config
+
+To use SSL on inserted media (prevents mixed content warnings on SSL websites), add to config.yml:
+```yml
+TwitterService:
+  use_https: true
+```
 
 ## Need more help?
 

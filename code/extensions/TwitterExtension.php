@@ -4,7 +4,7 @@
  * Provides twitter api access for page controllers
  *
  * @author Damian Mooyman
- * 
+ *
  * @package twitter
  */
 class TwitterExtension extends Extension
@@ -17,7 +17,7 @@ class TwitterExtension extends Extension
 
     /**
      * Set the service to use for accessing twitter
-     * @param ITwitterService $twitterService 
+     * @param ITwitterService $twitterService
      */
     public function setTwitterService(ITwitterService $twitterService)
     {
@@ -26,19 +26,20 @@ class TwitterExtension extends Extension
 
     /**
      * Retrieves the latest tweet
-     * 
+     *
      * @return ArrayData
      */
     public function LatestTweet()
     {
-        return $this->LatestTweets()->first();
+        $latestTweets = $this->LatestTweets();
+        return $latestTweets ? $latestTweets->first() : null;
     }
     
     /**
      * Retrieves (up to) the last $count tweets.
-     * 
+     *
      * Note: Actual returned number may be less than 10 due to reasons
-     * 
+     *
      * @param integer $count
      * @return ArrayList
      */
@@ -48,9 +49,25 @@ class TwitterExtension extends Extension
         return $this->LatestTweetsUser($user, $count);
     }
     
+    
+    /**
+     * Retrieves (up to) the last $count favourite tweets.
+     *
+     * Note: Actual returned number may be less than 10 due to reasons
+     *
+     * @param integer $count
+     * @return ArrayList
+     */
+    public function Favorites($count = 4)
+    {
+        $user = SiteConfig::current_site_config()->TwitterUsername;
+        
+        return new ArrayList($this->twitterService->getFavorites($user, $count));
+    }
+    
     /**
      * Converts an array of tweets into a template-compatible format
-     * 
+     *
      * @param array $tweets
      * @return ArrayList
      */
@@ -87,9 +104,9 @@ class TwitterExtension extends Extension
     
     /**
      * Retrieves (up to) the last $count tweets searched by the $query
-     * 
+     *
      * Note: Actual returned number may be less than 10 due to reasons
-     * 
+     *
      * @param string $query Search terms
      * @param integer $count Number of tweets
      * @return ArrayList List of tweets
