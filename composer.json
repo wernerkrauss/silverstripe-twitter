@@ -14,7 +14,7 @@
 		"issues": "http://github.com/tractorcow/silverstripe-twitter/issues"
 	},
 	"require": {
-		"silverstripe/framework": "^3.1",
+		"silverstripe/framework": "^4.0",
 		"composer/installers": "*"
 	},
 	"extra": {
@@ -22,5 +22,6 @@
 	},
 	"suggest": {
 		"silverstripe/widgets": "Put your tweets in your blog or page sidebar!"
-	}
+	},
+	"minimum-stability": "alpha"
 }

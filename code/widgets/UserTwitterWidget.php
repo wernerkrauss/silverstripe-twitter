@@ -1,4 +1,10 @@
 <?php
+
+namespace TractorCow\Twitter\Widgets;
+
+use SilverStripe\Control\Controller;
+use SilverStripe\Forms\TextField;
+
 if (class_exists('Widget')) {
     class UserTwitterWidget extends TwitterWidget
     {

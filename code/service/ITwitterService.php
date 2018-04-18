@@ -1,5 +1,7 @@
 <?php
 
+namespace TractorCow\Twitter\Services;
+
 /**
  * Interface for a twitter service
  *

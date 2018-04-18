@@ -1,5 +1,15 @@
 <?php
 
+namespace TractorCow\Twitter\Extensions;
+
+use SilverStripe\Core\Extension;
+use SilverStripe\ORM\ArrayList;
+use SilverStripe\ORM\FieldType\DBDatetime;
+use SilverStripe\ORM\FieldType\DBField;
+use SilverStripe\SiteConfig\SiteConfig;
+use TractorCow\Twitter\Services\ITwitterService;
+use SilverStripe\View\ArrayData;
+
 /**
  * Provides twitter api access for page controllers
  *
@@ -75,7 +85,7 @@ class TwitterExtension extends Extension
     {
         $items = new ArrayList();
         foreach ($tweets as $tweet) {
-            $tweet['DateObject'] = DBField::create_field('SS_DateTime', $tweet['Date']);
+            $tweet['DateObject'] = DBField::create_field('SilverStripe\ORM\FieldType\DBDateTime', $tweet['Date']);
             $items->push(new ArrayData($tweet));
         }
         return $items;

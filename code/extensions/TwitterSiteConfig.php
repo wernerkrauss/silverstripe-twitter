@@ -1,5 +1,12 @@
 <?php
 
+namespace TractorCow\Twitter\Extensions;
+
+use SilverStripe\Forms\CheckboxField;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\TextField;
+use SilverStripe\ORM\DataExtension;
+
 /**
  * Sets twitter configuration in the SiteConfig
  *

@@ -1,22 +1,26 @@
 ---
 Name: twitterconfig
 ---
-Injector:
-  TwitterService:
-    class: CachedTwitterService
+SilverStripe\Core\Injector:
+  TractorCow\Twitter\Services\TwitterService:
+    class: TractorCow\Twitter\Services\CachedTwitterService
     constructor:
       - %$WebTwitterService
-  WebTwitterService:
-    class: TwitterService
-TwitterExtension:
+  TractorCow\Twitter\Services\WebTwitterService:
+    class: TractorCow\Twitter\Services\TwitterService
+  Psr\SimpleCache\CacheInterface.cachedTwitterService:
+    factory: SilverStripe\Core\Cache\CacheFactory
+    constructor:
+      namespace: 'cachedTwitterService'
+TractorCow\Twitter\Extensions\TwitterExtension:
   dependencies:
-    TwitterService: %$TwitterService
-Page_Controller:
+    TwitterService: %$TractorCow\Twitter\Services\TwitterService
+PageController:
   extensions:
-    - TwitterExtension
-SiteConfig:
+    - TractorCow\Twitter\Extensions\TwitterExtension
+SilverStripe\SiteConfig\SiteConfig:
   extensions:
-    - TwitterSiteConfig
-CachedTwitterService:
+    - TractorCow\Twitter\Extensions\TwitterSiteConfig
+TractorCow\Twitter\Services\CachedTwitterService:
 # Lifetime in seconds of cache
   lifetime: 300
