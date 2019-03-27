@@ -1,7 +1,7 @@
 {
 	"name": "tractorcow/silverstripe-twitter",
 	"description": "Simple Twitter feed for Silverstripe",
-	"type": "silverstripe-module",
+	"type": "silverstripe-vendormodule",
 	"keywords": ["silverstripe", "twitter", "widget"],
 	"license": "BSD-3-Clause",
 	"authors": [
@@ -17,6 +17,11 @@
 		"silverstripe/framework": "^4.0",
 		"composer/installers": "*"
 	},
+    "autoload": {
+        "psr-4": {
+            "TractorCow\\Twitter\\": "src/"
+        }
+    },
 	"extra": {
 		"installer-name": "twitter",
 		"branch-alias": {
