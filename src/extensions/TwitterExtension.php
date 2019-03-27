@@ -86,6 +86,7 @@ class TwitterExtension extends Extension
         $items = new ArrayList();
         foreach ($tweets as $tweet) {
             $tweet['DateObject'] = DBField::create_field('SilverStripe\ORM\FieldType\DBDateTime', $tweet['Date']);
+            $tweet['Content'] = DBField::create_field('HTMLText', $tweet['Content']);
             $items->push(new ArrayData($tweet));
         }
         return $items;
