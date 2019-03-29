@@ -135,13 +135,13 @@ class TwitterService implements ITwitterService
     /**
      * Calculate the time ago in days, hours, whichever is the most significant
      *
-     * @param string $time Input time as a string
+     * @param integer $time Input time as a timestamp
      * @param integer $detail Number of time periods to display. Increasing provides greater time detail.
      * @return string
      */
     public static function determine_time_ago($time, $detail = 1)
     {
-        $difference = time() - strtotime($time);
+        $difference = time() - $time;
 
         if ($difference < 1) {
             return _t('Date.LessThanMinuteAgo', 'less than a minute');
